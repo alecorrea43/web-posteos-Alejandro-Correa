@@ -27,6 +27,6 @@ app.use(georefRouter);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
-    database();
+    //database();
     conectarMongo();
 });

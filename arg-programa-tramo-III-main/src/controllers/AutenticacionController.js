@@ -9,14 +9,28 @@ const usuarios = [
     { id: 2, usuario: 'Lady', contrasenia: 'abcdef' },
 ];
 
-AutenticacionController.autenticar = (req, res) => {
-    const usuario = req.body.usuario;
+AutenticacionController.autenticar = async (req, res) => {
+    try{
+     const { usuario, contrasenia} = req.body;
+     const usuarioEncontrado = await UsuarioModel. findOne({
+        where: {usuario, contrasenia}
+    });
+     if (!usuarioEncontrado) {
+         return res.status (404).json({mensaje: 'El usuario no fué encontrado.'});
+                                                                                
+     }
+     const datos = {
+         id: usuarioEncontrado._id,
+         usuario: usuarioEncontrado.usuario,
+         nombres: usuarioEncontrado. nombres,
+         apellidos: usuarioEncontrado.apellidos,
+     }
+     let token = jwt.sign(datos, JWT_KEY);
+    res.json({token:token});      
+    }catch (error) {
 
-    // Simular autenticación
-    let token = jwt.sign({ usuario: usuario }, JWT_KEY);
-
-    res.json({ token: token });
 }
+
 
 AutenticacionController.registrar = (req, res) => {
     // Simular regitro...
@@ -36,5 +50,5 @@ AutenticacionController.verificarToken = (req, res) => {
         });
     }
 }
-
+}
 module.exports = AutenticacionController;

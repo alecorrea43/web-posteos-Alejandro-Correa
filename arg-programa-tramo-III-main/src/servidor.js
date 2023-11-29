@@ -18,6 +18,7 @@ const PORT = 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(fileUpload());
+app.use(cors())
 
 // Rutas
 app.use(usuarioRouter);
@@ -27,6 +28,6 @@ app.use(georefRouter);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
-    //database();
-    conectarMongo();
+    database();
+    //conectarMongo();
 });

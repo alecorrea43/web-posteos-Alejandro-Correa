@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const UsuarioModel = require('./../models/UsuarioModel.js');
 
 const AutenticacionController = {}
 
@@ -26,9 +27,9 @@ AutenticacionController.autenticar = async (req, res) => {
          apellidos: usuarioEncontrado.apellidos,
      }
      let token = jwt.sign(datos, JWT_KEY);
-    res.json({token:token});      
+    res.json({token:token, datos: datos});      
     }catch (error) {
-
+     return res.status(500).json({mensaje:'hubo un error'})
 }
 
 
